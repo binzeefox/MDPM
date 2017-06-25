@@ -21,7 +21,7 @@ public class UserUtil {
      * @param psd_c 确认密码
      * @return 返回是否注册成功
      */
-    public static boolean checkRegister(TextInputLayout userName, TextInputLayout eMail, TextInputLayout psd, TextInputLayout psd_c){
+    public static boolean checkRegister(TextInputLayout userName, TextInputLayout eMail, TextInputLayout phone, TextInputLayout psd, TextInputLayout psd_c){
 
         String mUserName;
         String mEmail;
@@ -59,8 +59,12 @@ public class UserUtil {
             psd_c.setError("二次输入密码不一致");
         }
 
+        String mPhone = getString(phone);
+        mPhone = CommonUtil.md5(mPhone);
+        mEmail = CommonUtil.md5(mEmail);
         mPsd = CommonUtil.md5(mPsd); //获取密码的MD5码
         User user = new User();
+        user.setPhone(mPhone);
         user.setUserName(mUserName);
         user.setEmail(mEmail);
         user.setMd5Psd(mPsd);
@@ -109,11 +113,29 @@ public class UserUtil {
         return 1;
     }
 
+
+    /**
+     * 获取用户ID
+     * @param userName 用户名
+     * @return 返回用户ID
+     */
     public static int getUserId(String userName){
 
         List<User> users = DataSupport.where("userName = ?", userName).find(User.class);
         User user = users.get(0);
-        int id = user.getId();
-        return id;
+        return user.getId();
+    }
+
+    /**
+     * 获取String
+     * @param inputLayout 文本框
+     * @return 字符串
+     */
+    private static String getString(TextInputLayout inputLayout) {
+        String text = "";
+        if (inputLayout.getEditText().getText() != null) {
+            text = inputLayout.getEditText().getText().toString();
+        }
+        return text;
     }
 }

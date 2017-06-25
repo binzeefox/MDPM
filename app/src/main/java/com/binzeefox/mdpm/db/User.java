@@ -13,6 +13,7 @@ public class User extends DataSupport implements Serializable{
     private String userName;
     private String md5Psd;
     private String email;
+    private String phone;
 
 
     public int getId() {
@@ -45,5 +46,13 @@ public class User extends DataSupport implements Serializable{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
