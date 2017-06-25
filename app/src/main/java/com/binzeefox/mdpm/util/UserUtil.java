@@ -78,6 +78,10 @@ public class UserUtil {
      * @param psd psd的TextInputLayout实例
      * @return -1：用户名或密码错误； 0：验证失败并报错； 1：验证成功
      */
+
+    public static final int LOGIN_VALID = -1;
+    public static final int LOGIN_SUCCESS = 1;
+    public static final int LOGIN_FAILED = 0;
     public static int checkLogin(TextInputLayout userName, TextInputLayout psd){
         String mUserName;
         String mPsd;
@@ -86,7 +90,7 @@ public class UserUtil {
             mUserName = userName.getEditText().getText().toString();
         } else {
             userName.setError("用户名不能为空");
-            return 0;
+            return LOGIN_FAILED;
         }
 
         if (psd.getEditText().getText().toString() != null){
@@ -94,23 +98,23 @@ public class UserUtil {
             mPsd = CommonUtil.md5(mPsd); // 获取密码的MD5码
         } else {
             psd.setError("请输入密码");
-            return 0;
+            return LOGIN_FAILED;
         }
 
         List<User> users = DataSupport.where("userName = ?", mUserName).find(User.class);
         if (users.isEmpty()){
             // 用户名不存在
-            return -1;
+            return LOGIN_VALID;
         }
 
         User user = users.get(0);
         if (!Objects.equals(user.getMd5Psd(), mPsd)){ // 验证数据库的密码MD5码与输入的密码获取的MD5码是否一致
             // 密码错误
-            return -1;
+            return LOGIN_VALID;
         }
 
         // 验证成功
-        return 1;
+        return LOGIN_SUCCESS;
     }
 
 
@@ -131,7 +135,7 @@ public class UserUtil {
      * @param inputLayout 文本框
      * @return 字符串
      */
-    private static String getString(TextInputLayout inputLayout) {
+    public static String getString(TextInputLayout inputLayout) {
         String text = "";
         if (inputLayout.getEditText().getText() != null) {
             text = inputLayout.getEditText().getText().toString();

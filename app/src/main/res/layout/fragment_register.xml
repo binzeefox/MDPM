@@ -5,6 +5,10 @@
     android:orientation="vertical"
     tools:context="com.binzeefox.mdpm.RegisterFragment">
 
+    <FrameLayout
+        android:id="@+id/focus_holder"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -74,8 +78,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingEnd="16dp"
-                android:paddingStart="16dp"
+                android:paddingEnd="32dp"
+                android:paddingStart="32dp"
                 android:text="@string/text_info_hint"
                 android:typeface="monospace" />
 
