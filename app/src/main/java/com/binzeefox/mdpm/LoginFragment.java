@@ -4,8 +4,11 @@ package com.binzeefox.mdpm;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +16,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.binzeefox.mdpm.db.User;
+import com.binzeefox.mdpm.client.UserActivity;
 import com.binzeefox.mdpm.util.UserUtil;
 
 
@@ -25,6 +28,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private TextInputLayout userName;
     private TextInputLayout password;
     private TextView issueLogin;
+    private FrameLayout focusHolder;
+
 
     public LoginFragment() {
         // Required empty public constructor
@@ -37,7 +42,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         View v = inflater.inflate(R.layout.fragment_login, container, false);
 
-        FrameLayout focusHolder = (FrameLayout) v.findViewById(R.id.focus_holder);
+        focusHolder = (FrameLayout) v.findViewById(R.id.focus_holder);
         focusHolder.setFocusable(true);
         focusHolder.setFocusableInTouchMode(true);
         focusHolder.requestFocus();
@@ -64,12 +69,23 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
             case R.id.forget_password:
                 // TODO 这里跳转进忘记密码页面
+                Intent intent = new Intent(getContext(), UserActivity.class);
+                intent.putExtra("client_action", UserUtil.PASSWORD_RESET);
+                Slide mSlide = new Slide();
+                mSlide.setSlideEdge(Gravity.START);
+                getActivity().getWindow().setEnterTransition(mSlide);
+                getActivity().getWindow().setExitTransition(mSlide);
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity());
+                startActivity(intent, optionsCompat.toBundle());
                 break;
             default:
                 break;
         }
     }
 
+    /**
+     * 验证登陆
+     */
     private void doLogin() {
 
         switch (UserUtil.checkLogin(userName, password)){
@@ -83,7 +99,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
             case UserUtil.LOGIN_SUCCESS:
                 int userId = UserUtil.getUserId(UserUtil.getString(userName));
-                Intent intent = new Intent(getActivity(), UserActivity.class);
+                Intent intent = new Intent(getActivity(), MainActivity.class);
                 intent.putExtra("userId", userId);
                 startActivity(intent);
                 getActivity().finish();
@@ -97,11 +113,15 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
      * 刷新输入框
      */
     private void viewRefresh(){
+        focusHolder.requestFocus();
         TextInputLayout[] views = new TextInputLayout[]{
                 userName,password
         };
         for (TextInputLayout view:views){
             view.setError(null);
+            if (view.getId() != R.id.username_field) {
+                view.getEditText().setText(null);
+            }
         }
     }
 

@@ -14,6 +14,7 @@ public class User extends DataSupport implements Serializable{
     private String md5Psd;
     private String email;
     private String phone;
+    private String time;
 
 
     public int getId() {
@@ -54,5 +55,13 @@ public class User extends DataSupport implements Serializable{
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

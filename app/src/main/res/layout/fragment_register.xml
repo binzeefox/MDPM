@@ -30,7 +30,9 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
                     android:hint="@string/user_field"
+                    android:inputType="text"
                     android:paddingEnd="8dp"
                     android:paddingStart="8dp" />
             </android.support.design.widget.TextInputLayout>
@@ -46,6 +48,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
                     android:hint="@string/password_field"
                     android:inputType="textPassword"
                     android:paddingEnd="8dp"
@@ -63,6 +66,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
                     android:hint="@string/password_confirm_field"
                     android:inputType="textPassword"
                     android:paddingEnd="8dp"
@@ -87,13 +91,14 @@
                 android:id="@+id/email_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp">
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
                     android:hint="@string/email_field"
                     android:inputType="textEmailAddress"
                     android:paddingEnd="8dp"
@@ -111,6 +116,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
                     android:hint="@string/phone_field"
                     android:inputType="phone"
                     android:paddingEnd="8dp"
@@ -129,12 +135,12 @@
             android:id="@+id/button_act"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:layout_marginBottom="32dp"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/button_bg_ripple"
-            android:text="注册"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+            android:text="注册"/>
     </LinearLayout>
 </LinearLayout>
